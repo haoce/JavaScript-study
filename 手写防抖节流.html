@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <input id="input" type="text" onkeyup="valueChange()">
+    </div>
+    <div id="list">
+        <ul id="ul"></ul>
+    </div>
+</body>
+<script>
+    let arr = ['111', 'aaaa', '23542', 'dfass', 'ccccc', '4563']
+    let dom = document.getElementById("input")
+    let list = document.getElementById('ul')
+
+    // 防抖
+    function fn(fun, timer) {
+        let time = null
+        return function() {
+            if (time) {
+                clearTimeout(time)
+            }
+            time = setTimeout(() => {
+                fun()
+                time = null
+            }, timer)
+        }
+    }
+
+    // 节流
+    function fn2(fun, time) {
+        let timer = 0
+        return function() {
+            let now = Date.now()
+            if(now - timer >= time) {
+                fun()
+                timer = Date.now()
+            }
+        }
+    }
+
+    function p() {
+        console.log(11)
+    }
+    let valueChange = fn2(p, 1000)
+
+    // function valueChange () {
+    //     let value = dom.value
+    //     if (!value) {
+    //         list.innerHTML = ''
+    //         return
+    //     }
+    //     let valueList = arr.filter(v => {
+    //         return v.includes(value)
+    //     })
+    //     console.log(valueList)
+    //     list.innerHTML = ''
+    //     valueList.forEach(v => {
+    //         let node = document.createElement('li')
+    //         node.innerHTML = v
+    //         list.appendChild(node)
+    //     })
+    // }
+</script>
+</html>

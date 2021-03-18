@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    // bind
+    Function.prototype.bind1 = function () {
+        const args = Array.from(arguments)
+        let _this = args.shift()
+        let self = this
+        return () => {
+            console.log(_this)
+            self.call1(_this, ...args)
+        }
+    }
+
+    // call
+    Function.prototype.call1 = function(data, ...arg) {
+        // let args = Array.from(arguments)
+        // let _this = args.shift()
+        let _this = data
+        let self = this
+        _this.fn = self
+        _this.fn(...arg)
+    }
+
+    let obj = {
+        x: 1,
+        fn: function(data, val) {
+            console.log(this.x, data, val)
+        }
+    }
+    obj.fn()
+    let p = obj.fn.bind1({x:2}, 3, 4)
+    p()
+
+    obj.fn.call1({x: 5}, 6, 7)
+</script>
+</html>
